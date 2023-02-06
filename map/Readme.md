@@ -8,7 +8,7 @@ A map is essentially a [hash table](https://en.wikipedia.org/wiki/Hash_table) wh
 
 The low-order bits of the hash are used to select a bucket. If we look inside any bucket, we will find two data structures, an array containing the top 8 high-order bits (HOBs) from the same hash key used to select the bucket, which distinguishes each key-value pair stored within the bucket; and a byte array storing the key-value pairs, with the keys and values packed together for the specific bucket.
 
-![Hash Map](images/hash-map.png)
+![Hash Map](images/hash-map.jpg)
 
 ## Memory and Bucket Overflow
 
