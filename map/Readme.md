@@ -16,7 +16,7 @@ There is a reason why keys and values are packed together in a bucket. If they w
 
 A bucket is designed to hold only 8 key-value pairs. If a ninth key needs to be added to a full bucket, an overflow bucket is created and referenced from the respective bucket.
 
-![Bucket Overflow](images/bucket-overflow.png)
+![Bucket Overflow](images/bucket-overflow.jpg)
 
 Continuing to add or remove key-value pairs from a map can affect the efficiency of map lookups. The load threshold values that determine when to expand the hash table are based on four factors.
 
