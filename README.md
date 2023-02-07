@@ -1,2 +1,3 @@
 # go-tour
-A Tour of Go
+
+- [Maps](https://github.com/gkjoyes/go-tour/tree/main/maps)
