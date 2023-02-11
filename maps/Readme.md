@@ -1,4 +1,4 @@
-# Macro View of Map
+# Macro View of [Map](https://go.dev/src/runtime/map.go)
 
 Maps is a collection of unordered pairs of key-value. It is widely used because it provides fast lookups and values that can retrieve, update or delete with the help of keys.
 
@@ -10,13 +10,15 @@ The low-order bits of the hash are used to select a bucket. If we look inside an
 
 ![Hash Map](images/hash-map.jpg)
 
-## Memory and Bucket Overflow
+## Bucket Overflow
 
 There is a reason why keys and values are packed together in a bucket. If they were stored as key/value/key/value, padding allocations would be necessary between each key/value pair to maintain proper alignment boundaries.
 
 A bucket is designed to hold only 8 key-value pairs. If a ninth key needs to be added to a full bucket, an overflow bucket is created and referenced from the respective bucket.
 
 ![Bucket Overflow](images/overflow-bucket.jpg)
+
+## How Maps Grow
 
 Continuing to add or remove key-value pairs from a map can affect the efficiency of map lookups. The load threshold values that determine when to expand the hash table are based on four factors.
 
