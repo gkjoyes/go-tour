@@ -2,6 +2,11 @@
 
 Maps is a collection of unordered pairs of key-value. It is widely used because it provides fast lookups and values that can retrieve, update or delete with the help of keys.
 
+- [How Maps Are Structured](https://github.com/gkjoyes/go-tour/tree/main/maps#how-maps-are-structured)
+- [Bucket Overflow](https://github.com/gkjoyes/go-tour/tree/main/maps#bucket-overflow)
+- [How Maps Grow](https://github.com/gkjoyes/go-tour/tree/main/maps#how-maps-grow)
+- [Iterating over maps](https://github.com/gkjoyes/go-tour/tree/main/maps#iterating-over-maps)
+
 ## How Maps Are Structured
 
 A map is essentially a [hash table](https://en.wikipedia.org/wiki/Hash_table) where data is organized into an array of buckets. The number of buckets always equals a power of two. When a mapping operation occurs, a hash key is generated based on the specified key.
