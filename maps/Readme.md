@@ -1,4 +1,4 @@
-# Macro View of [Map](https://github.com/golang/go/blob/master/src/runtime/map.go)
+# Go [maps](https://github.com/golang/go/blob/master/src/runtime/map.go) in action
 
 Maps is a collection of unordered pairs of key-value. It is widely used because it provides fast lookups and values that can retrieve, update or delete with the help of keys.
 
@@ -13,15 +13,11 @@ A map is essentially a [hash table](https://en.wikipedia.org/wiki/Hash_table) wh
 
 The low-order bits of the hash are used to select a bucket. If we look inside any bucket, we will find two data structures, an array containing the top 8 high-order bits (HOBs) from the same hash key used to select the bucket, which distinguishes each key-value pair stored within the bucket; and a byte array storing the key-value pairs, with the keys and values packed together for the specific bucket.
 
-![Hash Map](images/hash-map.jpg)
-
 ## Bucket Overflow
 
 There is a reason why keys and values are packed together in a bucket. If they were stored as key/value/key/value, padding allocations would be necessary between each key/value pair to maintain proper alignment boundaries.
 
 A bucket is designed to hold only 8 key-value pairs. If a ninth key needs to be added to a full bucket, an overflow bucket is created and referenced from the respective bucket.
-
-![Bucket Overflow](images/overflow-bucket.jpg)
 
 ## How Maps Grow
 
@@ -48,7 +44,7 @@ This process is delicate, as iterators still need to traverse the old buckets un
 
 The order in which elements of a map are iterated is not determined and may change from one iteration to the next. If an entry in the map is removed before it is reached during iteration, it will not be included in the iteration. Conversely, if an entry is added to the map during iteration, it may or may not be included in the iteration.
 
-Let’s take a look at what happens when you’re iterating over a map. The function [mapiterinit](https://github.com/golang/go/blob/bd5de19b368536574682c45cca9f7864a4eca6d2/src/runtime/map.go#L845-L856) initiates the iterator, and then the function `mapiternext` is called to retrieve the first element in the map. Here is the portion of the code in `mapiterinit` that calculates the starting point for iteration:
+Let’s take a look at what happens when you’re iterating over a map. The function [mapiterinit](https://github.com/golang/go/blob/bd5de19b368536574682c45cca9f7864a4eca6d2/src/runtime/map.go#L816) initiates the iterator, and then the function `mapiternext` is called to retrieve the first element in the map. Here is the portion of the code in `mapiterinit` that calculates the starting point for iteration:
 
 ```go
 // decide where to start
@@ -65,7 +61,7 @@ it.offset = uint8(r >> h.B & (bucketCnt - 1))
 it.bucket = it.startBucket
 ```
 
-We generate a random number with `fastrand()` and use it to determine the starting bucket and a random offset within that bucket. The `mapiternext` function then iterates through the elements, returning the first valid entity, while skipping over any empty ones.
+We generate a random number with `fastrand()`/`fastrand64()` and use it to determine the starting bucket and a random offset within that bucket. The `mapiternext` function then iterates through the elements, returning the first valid entity, while skipping over any empty ones.
 
 ```go
 for ; i < bucketCnt; i++ {
@@ -88,3 +84,7 @@ For example, consider a scenario where there is one bucket containing two valid 
 ```
 
 If we start with elements 0, 1, or 2, we'll get 10. If we start with elements 3, 4, 5, 6, or 7, we'll get 20.
+
+## References
+
+- [Macro View of Map Internals In Go - William Kennedy](https://www.ardanlabs.com/blog/2013/12/macro-view-of-map-internals-in-go.html)
