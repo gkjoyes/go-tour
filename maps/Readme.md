@@ -46,20 +46,7 @@ The order in which elements of a map are iterated is not determined and may chan
 
 Let’s take a look at what happens when you’re iterating over a map. The function [mapiterinit](https://github.com/golang/go/blob/bd5de19b368536574682c45cca9f7864a4eca6d2/src/runtime/map.go#L816) initiates the iterator, and then the function `mapiternext` is called to retrieve the first element in the map. Here is the portion of the code in `mapiterinit` that calculates the starting point for iteration:
 
-```go
-// decide where to start
-var r uintptr
-if h.B > 31-bucketCntBits {
-    r = uintptr(fastrand64())
-} else {
-    r = uintptr(fastrand())
-}
-it.startBucket = r & bucketMask(h.B)
-it.offset = uint8(r >> h.B & (bucketCnt - 1))
-
-// iterator state
-it.bucket = it.startBucket
-```
+https://github.com/golang/go/blob/457721cd52008146561c80d686ce1bb18285fe99/src/runtime/map.go#L845
 
 We generate a random number with `fastrand()`/`fastrand64()` and use it to determine the starting bucket and a random offset within that bucket. The `mapiternext` function then iterates through the elements, returning the first valid entity, while skipping over any empty ones.
 
